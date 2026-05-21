@@ -1,0 +1,26 @@
+1:
+A short Repetition Time (TR) creates a T1 weighted image, due to less longitudinal recovery
+A long Echo Time (TE) creates a T2* weighted image, due to more transverse decay
+Small flip angle allows for faster imaging, but signal is weaker
+
+2:
+grey matter: 0.043
+white matter: 0.052
+
+3:
+No, signal is very low with such a low flip angle
+
+4:
+A short Repetition Time (TR) creates a T1 weighted image, due to less longitudinal recovery
+A long Echo Time (TE) creates a T2 weighted image, due to more transverse decay
+Usually 90 degree, otherwise not true T2 anymore.
+
+5:
+grey matter: 0.0037
+white matter: 0.0060
+
+6:
+It is already very T1 weighted -> short TR and short TE
+
+7:
+GRE, because no refocusing pulse which could recover signal loss from field inhomogeneities

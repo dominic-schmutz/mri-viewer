@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MRI Decay Viewer</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="toolbar" aria-label="Scan controls">
+        <div class="field">
+          <label for="sequence">Sequence</label>
+          <select id="sequence">
+            <option value="GRE">GRE</option>
+            <option value="SE">SE</option>
+          </select>
+        </div>
+        <div class="field wide">
+          <label for="series">Configuration</label>
+          <select id="series"></select>
+        </div>
+        <div class="field">
+          <label for="slice">Slice <span id="sliceValue"></span></label>
+          <input id="slice" type="range" min="0" max="0" value="0" />
+        </div>
+        <div class="field echo-field">
+          <label for="echo">
+            Echo <span id="echoValue"></span>
+            <span class="fit-range-label">Fit <span id="fitRangeValue"></span></span>
+          </label>
+          <div class="echo-stack">
+            <div class="echo-rail"></div>
+            <div class="echo-fit-window" id="fitWindow"></div>
+            <input
+              id="fitEchoStart"
+              class="echo-range fit-start"
+              type="range"
+              min="0"
+              max="0"
+              value="0"
+              aria-label="First echo used for fit"
+            />
+            <input
+              id="fitEchoEnd"
+              class="echo-range fit-end"
+              type="range"
+              min="0"
+              max="0"
+              value="0"
+              aria-label="Last echo used for fit"
+            />
+            <input
+              id="echo"
+              class="echo-range echo-current"
+              type="range"
+              min="0"
+              max="0"
+              value="0"
+            />
+          </div>
+        </div>
+        <div class="field compact">
+          <label for="radius">ROI radius px</label>
+          <input id="radius" type="number" min="0" max="20" value="3" />
+        </div>
+        <div class="field auto-window-field">
+          <span class="field-label">Display</span>
+          <label class="checkbox-control" for="autoWindow">
+            <input id="autoWindow" type="checkbox" />
+            <span>Auto window</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="viewer-panel">
+          <div class="viewer-head">
+            <div>
+              <h1>MRI Decay Viewer</h1>
+              <p id="scanMeta"></p>
+            </div>
+            <div class="stats">
+              <span id="pointMeta">x -, y -</span>
+              <strong id="fitValue">-</strong>
+            </div>
+          </div>
+          <div class="image-wrap" id="imageWrap">
+            <canvas id="imageCanvas" width="512" height="512"></canvas>
+          </div>
+          <section class="map-panel" aria-label="Relaxation map">
+            <div class="map-head">
+              <h2 id="mapTitle">Relaxation Map</h2>
+              <span id="mapMeta">Loading</span>
+            </div>
+            <div class="map-wrap">
+              <canvas id="mapCanvas" width="512" height="512"></canvas>
+              <div class="map-scale" aria-hidden="true">
+                <span id="mapLow">-</span>
+                <i></i>
+                <span id="mapHigh">-</span>
+              </div>
+            </div>
+          </section>
+          <section class="map-panel" aria-label="Fat-corrected T2 star map">
+            <div class="map-head">
+              <h2>Fat-Corrected T2* Map</h2>
+              <span id="correctedMapMeta">GRE only</span>
+            </div>
+            <div class="map-wrap">
+              <canvas id="correctedMapCanvas" width="512" height="512"></canvas>
+              <div class="map-scale" aria-hidden="true">
+                <span id="correctedMapLow">-</span>
+                <i></i>
+                <span id="correctedMapHigh">-</span>
+              </div>
+            </div>
+          </section>
+          <section class="map-panel" aria-label="Apparent fat signal map">
+            <div class="map-head">
+              <h2>Apparent Fat Signal Map</h2>
+              <span id="fatMapMeta">GRE only</span>
+            </div>
+            <div class="map-wrap">
+              <canvas id="fatMapCanvas" width="512" height="512"></canvas>
+              <div class="map-scale" aria-hidden="true">
+                <span>Apparent fat 0%</span>
+                <i></i>
+                <span>Apparent fat 100%</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside class="analysis-panel">
+          <div class="graph-head">
+            <h2>Signal Decay</h2>
+            <span id="fitMeta">No point selected</span>
+          </div>
+          <canvas id="graphCanvas" width="560" height="320"></canvas>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>TE ms</th>
+                  <th>Signal</th>
+                  <th>Fit</th>
+                </tr>
+              </thead>
+              <tbody id="signalRows"></tbody>
+            </table>
+          </div>
+        </aside>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
